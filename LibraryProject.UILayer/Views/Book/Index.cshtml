@@ -1,0 +1,44 @@
+﻿@model List<ResultBookDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MemberLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">Kitaplar</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>İsim</th>
+                            <th>Oluşturma Tarihi</th>
+                            <th>Fiyat</th>
+                            <th>Sayfa Sayısı</th>
+                            <th>Güncelle</th>
+                            <th>Sil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.CreateDate</td>
+                                <td>@item.Price</td>
+                                <td>@item.PageCount</td>
+                                <td><a href="/Book/UpdateBook/@item.Id" class="btn btn-outline-success">Güncelle</a></td>
+                                <td><a href="/Book/DeleteBook/@item.Id" class="btn btn-outline-danger">Sil</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <a href="/Book/CreateBook" class="btn btn-outline-info">Yeni Kitap Girişi</a>
+</div>
+
