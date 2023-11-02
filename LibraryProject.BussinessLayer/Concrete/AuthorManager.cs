@@ -22,15 +22,13 @@ namespace LibraryProject.BussinessLayer.Concrete
         public bool Delete(int id)
         {
             var value = _authorDal.GetById(id);
-            if (value != null)
+            if (value is null)
             {
-                _authorDal.Remove(id);
-                return true;
-            }
-            else
-            {
+                
                 return false;
             }
+            _authorDal.Remove(id);
+            return true;
 
         }
 
@@ -53,15 +51,13 @@ namespace LibraryProject.BussinessLayer.Concrete
         public bool Update(Author entity)
         {
             var value = _authorDal.GetById(entity.Id);
-            if (value != null)
+            if (value is null)
             {
-                _authorDal.Update(entity);
-                return true;
-            }
-            else
-            {
+                
                 return false;
             }
+            _authorDal.Update(entity);
+            return true;
         }
     }
 }

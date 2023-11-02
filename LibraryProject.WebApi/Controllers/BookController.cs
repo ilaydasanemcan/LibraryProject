@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryProject.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -16,74 +16,59 @@ namespace LibraryProject.WebApi.Controllers
             _bookService = bookService;
         }
 
-        [HttpGet("GetAllBooks")]
+        [HttpGet]
         public IActionResult GetAllBooks()
         {
             var values = _bookService.GetList();
-            if (values != null)
-            {
-                return Ok(values);
-            }
-            else
+            if (values is null)
             {
                 return NotFound("Kitaplar Bulunamadı.");
             }
+            return Ok(values);
         }
 
-        [HttpGet("GetBookById")]
+        [HttpGet]
         public IActionResult GetBookById(int id)
         {
             var values = _bookService.GetById(id);
-            if (values != null)
-            {
-                return Ok(values);
-            }
-            else
+            if (values is null)
             {
                 return NotFound("Aranılan Kitap Bulunamadı.");
             }
+            return Ok(values);
         }
 
-        [HttpDelete("DeleteBook")]
+        [HttpDelete]
         public IActionResult DeleteBook(int id)
         {
             var values = _bookService.Delete(id);
-            if (values)
-            {
-                return Ok("Silme İşlemi Başarılı");
-            }
-            else
+            if (!values)
             {
                 return BadRequest("Silme İşlemi Başarısız.");
             }
+            return Ok("Silme İşlemi Başarılı");
         }
 
-        [HttpPut("UpdateBook")]
+        [HttpPut]
         public IActionResult UpdateBook(Book book)
         {
             var values = _bookService.Update(book);
-            if (values)
-            {
-                return Ok("Güncelleme İşlemi Başarılı.");
-            }
-            else
+            if (!values)
             {
                 return BadRequest("Güncelleme İşlemi Başarısız.");
             }
+            return Ok("Güncelleme İşlemi Başarılı.");
         }
 
-        [HttpPost("CreateBook")]
+        [HttpPost]
         public IActionResult CreateBook(Book book)
         {
             var values=_bookService.Insert(book);
-            if (values)
-            {
-                return Ok("Ekleme İşlemi Başarılı.");
-            }
-            else
+            if (!values)
             {
                 return BadRequest("Ekleme İşlemi Başarısız.");
             }
+            return Ok("Ekleme İşlemi Başarılı.");
         }
     }
 }

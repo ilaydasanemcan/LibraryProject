@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryProject.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -18,35 +18,30 @@ namespace LibraryProject.WebApi.Controllers
             _bookService = bookService;
         }
 
-        [HttpGet("GetAllCategories")]
+        [HttpGet]
         public IActionResult GetAllCategories()
         {
             var values = _categoryService.GetList();
-            if (values != null)
-            {
-                return Ok(values);
-            }
-            else
+            if (values is null)
             {
                 return NotFound("Kategoriler Bulunamadı.");
             }
+            return Ok(values);
         }
 
-        [HttpGet("GetCategoryById")]
+        [HttpGet]
         public IActionResult GetCategoryById(int id)
         {
             var values = _categoryService.GetById(id);
-            if (values != null)
-            {
-                return Ok(values);
-            }
-            else
+            if (values is null)
             {
                 return NotFound("Aranılan Kategori Bulunamadı.");
+                
             }
+            return Ok(values);
         }
 
-        [HttpDelete("DeleteCatgory")]
+        [HttpDelete]
         public IActionResult DeleteCatgory(int id)
         {
             var values = _categoryService.Delete(id);
@@ -70,32 +65,28 @@ namespace LibraryProject.WebApi.Controllers
             }
         }
 
-        [HttpPut("UpdateCategory")]
+        [HttpPut]
         public IActionResult UpdateCategory(Category category)
         {
             var values = _categoryService.Update(category);
-            if (values)
-            {
-                return Ok("Güncelleme İşlemi Başarılı.");
-            }
-            else
+            if (!values)
             {
                 return BadRequest("Güncelleme İşlemi Başarısız.");
+                
             }
+            return Ok("Güncelleme İşlemi Başarılı.");
         }
 
-        [HttpPost("CreateCategory")]
+        [HttpPost]
         public IActionResult CreateCategory(Category category)
         {
             var values=_categoryService.Insert(category);
-            if (values)
-            {
-                return Ok("Ekleme İşlemi Başarılı.");
-            }
-            else
+            if (!values)
             {
                 return BadRequest("Ekleme İşlemi Başarısız.");
+                
             }
+            return Ok("Ekleme İşlemi Başarılı.");
         }
     }
 }

@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_MemberLayout.cshtml";
+    int count = 1;
 }
 
 <div class="col-lg-12">
@@ -25,9 +26,9 @@
                         @foreach(var item in Model)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@(count++)</td>
                                 <td>@item.Name</td>
-                                <td>@item.CreateDate</td>
+                                <td>@item.CreateDate.ToString("dd-MM-yyyy")</td>
                                 <td>@item.Price</td>
                                 <td>@item.PageCount</td>
                                 <td><a href="/Book/UpdateBook/@item.Id" class="btn btn-outline-success">Güncelle</a></td>

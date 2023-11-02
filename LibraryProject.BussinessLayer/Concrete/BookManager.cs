@@ -26,15 +26,13 @@ namespace LibraryProject.BussinessLayer.Concrete
         public bool Delete(int id)
         {
             var value = _bookDal.GetById(id);
-            if (value != null)
+            if (value is null)
             {
-                _bookDal.Remove(id);
-                return true;
-            }
-            else
-            {
+                
                 return false;
             }
+            _bookDal.Remove(id);
+            return true;
         }
 
         public List<int> GetAllBooksByAuthor(int authorId)
@@ -61,15 +59,13 @@ namespace LibraryProject.BussinessLayer.Concrete
         {
             var categoryValue = _categoryDal.GetById(entity.CategoryId);
             var authorValue = _authorDal.GetById(entity.AuthorId);
-            if (categoryValue != null && authorValue != null)
+            if (categoryValue is null && authorValue is null)
             {
-                _bookDal.Add(entity);
-                return true;
+                return false;
+                
             }
-            else
-            {
-                return false; 
-            }
+            _bookDal.Add(entity);
+            return true;
         }
 
         public bool Update(Book entity)
@@ -77,12 +73,12 @@ namespace LibraryProject.BussinessLayer.Concrete
             var value = _bookDal.GetById(entity.Id);
             var categoryValue = _categoryDal.GetById(entity.CategoryId);
             var authorValue = _authorDal.GetById(entity.AuthorId);
-            if (value != null && categoryValue != null && authorValue != null)
+            if (value is null && categoryValue is null && authorValue is null)
             {
-                _bookDal.Update(entity);
-                return true;
+                return false;
             }
-            return false;
+            _bookDal.Update(entity);
+            return true;
         }
     }
 }

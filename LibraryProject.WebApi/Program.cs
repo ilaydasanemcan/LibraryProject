@@ -7,13 +7,13 @@ using LibraryProject.DataAccessLayer.Concrete;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<Context>();
-builder.Services.AddTransient<ICategoryDal, CategoryDal>();
-builder.Services.AddTransient<IBookDal, BookDal>();
-builder.Services.AddTransient<IAuthorDal, AuthorDal>();
-builder.Services.AddTransient<ICategoryService, CategoryManager>();
-builder.Services.AddTransient<IBookService, BookManager>();
-builder.Services.AddTransient<IAuthorService, AuthorManager>();
+builder.Services.AddScoped<Context>();
+builder.Services.AddScoped<ICategoryDal, CategoryDal>();
+builder.Services.AddScoped<IBookDal, BookDal>();
+builder.Services.AddScoped<IAuthorDal, AuthorDal>();
+builder.Services.AddScoped<ICategoryService, CategoryManager>();
+builder.Services.AddScoped<IBookService, BookManager>();
+builder.Services.AddScoped<IAuthorService, AuthorManager>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryProject.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthorController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace LibraryProject.WebApi.Controllers
             _bookService = bookService;
         }
 
-        [HttpGet("GetAllAuthors")]
+        [HttpGet]
         public IActionResult GetAllAuthors()
         {
             var values = _authorService.GetList();
@@ -32,7 +32,7 @@ namespace LibraryProject.WebApi.Controllers
             }
         }
 
-        [HttpGet("GetAuthorById")]
+        [HttpGet]
         public IActionResult GetAuthorById(int id)
         {
             var values = _authorService.GetById(id);
@@ -46,7 +46,7 @@ namespace LibraryProject.WebApi.Controllers
             }
         }
 
-        [HttpDelete("DeleteAuthor")]
+        [HttpDelete]
         public IActionResult DeleteAuthor(int id)
         {
             var values = _authorService.Delete(id);
@@ -58,8 +58,8 @@ namespace LibraryProject.WebApi.Controllers
                     foreach (var item in bookValues)
                     {
                         _bookService.Delete(item);
-                        return Ok("Yazar ve Yazara ait kitaplar silindi.");
                     }
+                    return Ok("Yazar ve Yazara ait kitaplar silindi.");
                 }
                 return Ok("Yazar silindi.");
 
@@ -70,32 +70,28 @@ namespace LibraryProject.WebApi.Controllers
             }
         }
 
-        [HttpPut("UpdateAuthor")]
+        [HttpPut]
         public IActionResult UpdateAuthor(Author author)
         {
             var values = _authorService.Update(author);
-            if (values)
+            if (!values)
             {
-                return Ok("Güncelleme İşlemi Başarılı.");
-            }
-            else
-            {
+                
                 return BadRequest("Güncelleme İşlemi Başarısız.");
             }
+            return Ok("Güncelleme İşlemi Başarılı.");
         }
 
-        [HttpPost("CreateAuthor")]
+        [HttpPost]
         public IActionResult CreateAuthor(Author author)
         {
             var values = _authorService.Insert(author);
-            if (values)
+            if (!values)
             {
-                return Ok("Ekleme İşlemi Başarılı.");
-            }
-            else
-            {
+                
                 return BadRequest("Ekleme İşlemi Başarısız.");
             }
+            return Ok("Ekleme İşlemi Başarılı.");
         }
     }
 }
